@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout - DairyFarm{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">🛒 Checkout</h2>
+
+<div class="row">
+  <!-- Cart Summary -->
+  <div class="col-md-6">
+    <h4>Your Cart</h4>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart_items %}
+        <tr>
+          <td>{{ item.product.name }}</td>
+          <td>₹ {{ item.product.price }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>₹ {{ item.total_price }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <h4>Total: ₹ {{ cart_total }}</h4>
+  </div>
+
+  <!-- Delivery Form -->
+  <div class="col-md-6">
+    <h4>Delivery Information</h4>
+    <form method="POST" action="{% url 'place_order' %}">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="address" class="form-label">Address</label>
+        <textarea name="address" id="address" class="form-control" rows="3" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone Number</label>
+        <input type="tel" name="phone" id="phone" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-success w-100">Place Order</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

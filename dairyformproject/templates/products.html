@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Our Products - DairyFarm{% endblock %}
+
+{% block content %}
+<style>
+  .resized-img {
+    width: 150px;
+    height: auto;
+  }
+  </style>
+<h2 class="mb-4 text-center">Our Dairy Products</h2>
+
+<!-- Product Cards -->
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for product in products %}
+  <div class="col">
+    <div class="card h-100 shadow-sm border-light">
+      <!-- Image -->
+      <img src="{{ product.image.url }}" class="card-img-top resized-img" alt="{{ product.name }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text text-muted">{{ product.description|truncatewords:20 }}</p>
+        <p class="fw-bold text-success">₹ {{ product.price }}</p>
+      </div>
+      <div class="card-footer bg-white border-0 d-grid gap-2">
+        <!-- View Details Button -->
+        <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-success">View Details</a>
+        <a class="nav-link" href="{% url 'cart' %}"><i class="bi bi-cart"></i>Cart</a>
+
+        <!-- Add to Cart Form -->
+        <form action="{% url 'add_to_cart' product.id %}" method="POST">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-success w-100">Add to Cart</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p class="col-12 text-center">No products available right now.</p>
+  {% endfor %}
+</div>
+{% endblock %}

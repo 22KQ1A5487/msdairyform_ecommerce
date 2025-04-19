@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Order Successful{% endblock %}
+{% block content %}
+<div class="text-center my-5">
+  <h2>✅ Order Placed Successfully!</h2>
+  <p>Thank you for shopping with MS Dairy Farm.</p>
+  <a href="{% url 'products' %}" class="btn btn-outline-success mt-3">Back to Products</a>
+</div>
+{% endblock %}

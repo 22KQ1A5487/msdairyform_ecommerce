@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home - DairyFarm{% endblock %}
+
+{% block content %}
+<style>
+  .resized-img {
+    width: 150px;
+    height: auto;
+  }
+  </style>
+<!-- 🐄 Hero Section -->
+
+  <div class="container py-5">
+    <h1 class="display-5 fw-bold">Welcome to DairyFarm</h1>
+    <p class="col-md-8 fs-5 text-muted">
+      Fresh. Organic. Delivered. Experience the pure taste of nature with our farm-fresh milk and dairy products delivered to your doorstep.
+    </p>
+    <a href="{% url 'products' %}" class="btn btn-success btn-lg">Shop Now</a>
+  </div>
+</div>
+
+<!-- 🌿 Features Section -->
+<div class="row text-center mb-5">
+  <div class="col-md-4 mb-4">
+    <img src="{% static 's.jpg' %}" class="mb-3" width="80" alt="Fresh Milk">
+    <h5>Fresh Milk</h5>
+    <p>Daily extracted and immediately packed to ensure freshness and purity.</p>
+  </div>
+  <div class="col-md-4 mb-4">
+    <img src="{% static 's1.jpg' %}" class="mb-3" width="80" alt="Organic">
+    <h5>100% Organic</h5>
+    <p>No chemicals. No preservatives. Just natural goodness in every drop.</p>
+  </div>
+  <div class="col-md-4 mb-4">
+    <img src="{% static 's2.jpg' %}" class="mb-3" width="70" alt="Delivery">
+    <h5>Quick Delivery</h5>
+    <p>Timely delivery every morning to keep your day fresh and energetic.</p>
+  </div>
+</div>
+
+<!-- 🧀 Featured Products Preview -->
+<h3 class="mb-4">Our Products</h3>
+<div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+  <div class="col">
+    <div class="card h-100 shadow-sm">
+      <img src="{% static 's.jpg' %}" class="card-img-top resized-img " alt="Milk">
+      <div class="card-body">
+        <h5 class="card-title">Fresh Cow Milk</h5>
+        <p class="card-text">Pure, creamy, and nutritious. Available in 500ml and 1L packs.</p>
+      </div>
+      <div class="card-footer bg-white border-0">
+        <a href="{% url 'products' %}" class="btn btn-outline-success w-100">View More</a>
+      </div>
+    </div>
+  </div>
+  <!-- Repeat for other products -->
+</div>
+
+{% endblock %}

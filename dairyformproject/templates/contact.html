@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact Us - DairyFarm{% endblock %}
+
+{% block content %}
+
+<div class="container my-5">
+  <h2 class="mb-4 text-center">📬 Contact Us</h2>
+
+  <div class="row g-4">
+    <!-- Contact Form -->
+    <div class="col-md-6">
+      <div class="card shadow-sm p-4">
+        <h5 class="mb-3">📝 Leave us a message</h5>
+        <form method="POST">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label for="name" class="form-label">👤 Your Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="message" class="form-label">💬 Message</label>
+            <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-success w-100">📩 Send Message</button>
+        </form>
+
+        <a href="tel:8919731975" class="btn btn-outline-primary mt-3 w-100">📞 Call Us Now</a>
+      </div>
+    </div>
+
+    <!-- Contact Details -->
+    <div class="col-md-6">
+      <div class="card shadow-sm p-4 bg-light h-100">
+        <h5>🌾 Our Address</h5>
+        <p>Kandukur, Yerraguntapalem<br>MS DairyFarm, DAIRYLAND - 543210</p>
+
+        <h5>📞 Phone</h5>
+        <p><strong>8919731975</strong></p>
+
+        <h5>🕒 Working Hours</h5>
+        <p>Mon - Sat: 8 AM to 6 PM</p>
+
+        <h5>📍 Location</h5>
+        <p><a href="https://maps.app.goo.gl/qxTY4n14raog1GKt8" target="_blank" class="btn btn-sm btn-outline-secondary">View on Map</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

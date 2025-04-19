@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Cart - DairyFarm{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">🛒 Your Shopping Cart</h2>
+
+{% if cart_items %}
+  <table class="table table-bordered align-middle shadow-sm">
+    <thead class="table-success">
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart_items %}
+      <tr>
+        <td>
+          <div class="d-flex align-items-center">
+            <img src="{{ item.product.image.url }}" width="60" class="me-3 rounded shadow-sm" alt="{{ item.product.name }}">
+            <div>{{ item.product.name }}</div>
+          </div>
+        </td>
+        <td>₹ {{ item.product.price }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>₹ {{ item.total_price }}</td>
+        <td>
+          <form action="{% url 'remove_from_cart' item.product.id %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-sm btn-outline-danger">Remove</button>
+          
+          
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- 💰 Cart Total -->
+  <div class="text-end mt-4">
+    <h4>Total: ₹ {{ cart_total }}</h4>
+    <a href="{% url 'checkout' %}" class="btn btn-success btn-lg mt-2 me-2">Proceed to Checkout</a>
+    <a href="{% url 'payment' %}" class="btn btn-outline-success btn-lg mt-2">Proceed to Payment</a>
+  </div>
+
+{% else %}
+  <div class="alert alert-info text-center shadow-sm">
+    Your cart is empty. <a href="{% url 'products' %}" class="alert-link">Start shopping!</a>
+  </div>
+{% endif %}
+
+{% endblock %}

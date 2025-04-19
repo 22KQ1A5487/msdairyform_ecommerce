@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Order History - DairyFarm{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Your Order History</h2>
+
+{% if orders %}
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Date</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>View Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+      <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.date }}</td>
+        <td>₹ {{ order.total }}</td>
+        <td>
+          <span class="badge bg-{{ order.status_class }}">{{ order.status }}</span>
+        </td>
+        <td>
+          <a href="{% url 'order_detail' order.id %}" class="btn btn-outline-primary btn-sm">View</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% for order in orders %}
+    <p>Order #{{ order.id }} - Status: {{ order.status }}</p>
+{% endfor %}
+
+{% else %}
+  <p>You haven't placed any orders yet.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment - DairyFarm{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Payment Details</h2>
+
+<form method="POST" id="payment-form">
+    {% csrf_token %}
+    
+    <!-- Delivery Address -->
+    <div class="mb-3">
+        <label>Delivery Address</label>
+        <textarea name="address" class="form-control" required></textarea>
+    </div>
+
+    <!-- Phone Number -->
+    <div class="mb-3">
+        <label>Phone Number</label>
+        <input type="text" name="phone" class="form-control" required>
+    </div>
+
+    <!-- Stripe Card Element -->
+    <div class="form-group">
+        <label for="card-element">
+            Credit or Debit Card
+        </label>
+        <div id="card-element">
+            <!-- A Stripe Element will be inserted here. -->
+        </div>
+
+        <!-- Used to display form errors -->
+        <div id="card-errors" role="alert"></div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-success">Pay Now</button>
+</form>
+
+<!-- Stripe.js -->
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+    // Initialize Stripe with your public key
+    var stripe = Stripe('{{ STRIPE_TEST_PUBLIC_KEY }}');
+    var elements = stripe.elements();
+    var card = elements.create('card');
+    card.mount('#card-element');
+
+    // Handle form submission
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        // Create a Stripe token
+        stripe.createToken(card).then(function(result) {
+            if (result.error) {
+                // Show error message if Stripe token creation fails
+                var errorElement = document.getElementById('card-errors');
+                errorElement.textContent = result.error.message;
+            } else {
+                // Append the Stripe token to the form as a hidden input field
+                var token = result.token;
+                
+                var hiddenTokenInput = document.createElement('input');
+                hiddenTokenInput.setAttribute('type', 'hidden');
+                hiddenTokenInput.setAttribute('name', 'stripeToken');
+                hiddenTokenInput.setAttribute('value', token.id);
+                form.appendChild(hiddenTokenInput);
+
+                // Include additional form fields (address and phone)
+                var addressInput = document.createElement('input');
+                addressInput.setAttribute('type', 'hidden');
+                addressInput.setAttribute('name', 'address');
+                addressInput.setAttribute('value', form.querySelector('[name="address"]').value);
+                form.appendChild(addressInput);
+
+                var phoneInput = document.createElement('input');
+                phoneInput.setAttribute('type', 'hidden');
+                phoneInput.setAttribute('name', 'phone');
+                phoneInput.setAttribute('value', form.querySelector('[name="phone"]').value);
+                form.appendChild(phoneInput);
+
+                // Submit the form
+                form.submit();
+            }
+        });
+    });
+</script>
+
+{% endblock %}

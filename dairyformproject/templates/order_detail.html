@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Order #{{ order.id }} - DairyFarm{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Order #{{ order.id }}</h2>
+
+<div class="row">
+  <div class="col-md-6">
+    <h4>Delivery Address</h4>
+    <p>{{ order.address }}</p>
+    <p><strong>Phone:</strong> {{ order.phone }}</p>
+  </div>
+
+  <div class="col-md-6">
+    <h4>Status</h4>
+    <p><span class="badge bg-{{ order.status_class }}">{{ order.status }}</span></p>
+  </div>
+</div>
+
+<hr>
+
+<h4>Products</h4>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in order.items.all %}
+    <tr>
+      <td>{{ item.product.name }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>₹ {{ item.product.price }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h4>Total: ₹ {{ order.total }}</h4>
+
+{% endblock %}
