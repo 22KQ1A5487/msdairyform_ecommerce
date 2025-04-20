@@ -1,1 +1,38 @@
-*.pyc 
+# Python
+*.pyc
+__pycache__/
+
+# Django
+db.sqlite3
+*.sqlite3
+
+# Environment variables
+.env
+
+# Virtual environment
+venv/
+.env/
+
+# VS Code (or other editors)
+.vscode/
+
+# Migrations (you might want to keep __init__.py to track migrations)
+**/migrations/
+!**/migrations/__init__.py
+
+# Static files
+/static/
+
+# Media files (if you're handling user-uploaded files)
+media/
+
+# PyCharm
+.idea/
+
+# Log files
+*.log
+
+# OS-specific files
+.DS_Store      # macOS
+Thumbs.db      # Windows
+
